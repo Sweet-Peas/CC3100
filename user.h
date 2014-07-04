@@ -60,7 +60,13 @@ extern "C" {
 
  ******************************************************************************
  */
+  
+#include <string.h>
+#include <msp430.h>
+#include "board.h"
+#include "spi.h"
 
+typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 /*!
 	\def		MAX_CONCURRENT_ACTIONS
 
@@ -329,7 +335,7 @@ extern "C" {
     \note       belongs to \ref porting_sec
 
 */
-#define sl_DeviceEnable()
+#define sl_DeviceEnable       CC3100_enable
 
 /*!
     \brief		Disable the Network Processor
@@ -338,7 +344,7 @@ extern "C" {
 
     \note       belongs to \ref porting_sec
 */
-#define sl_DeviceDisable()
+#define sl_DeviceDisable      CC3100_disable
 
 /*!
 
@@ -370,7 +376,7 @@ extern "C" {
  ******************************************************************************
  */
 
-#define _SlFd_t					
+#define _SlFd_t                    int
 
 /*!
     \brief      Opens an interface communication port to be used for communicating
@@ -505,7 +511,8 @@ extern "C" {
 
     \warning        
 */
-#define sl_IfRegIntHdlr(InterruptHdl , pValue)    
+#define sl_IfRegIntHdlr(InterruptHdl , pValue) \
+                                registerInterruptHandler(InterruptHdl , pValue)
 /*!
     \brief 		Masks the Host IRQ
 
@@ -550,11 +557,13 @@ extern "C" {
 
     \warning        
 */
+/*
 #define SL_START_WRITE_STAT
+*/
 
 #ifdef SL_START_WRITE_STAT
-#define sl_IfStartWriteSequence                         SlStudio_SpiStartWriteSeq
-#define sl_IfEndWriteSequence                           SlStudio_SpiEndWriteSeq
+#define sl_IfStartWriteSequence                       
+#define sl_IfEndWriteSequence                         
 #endif
 /*!
 
@@ -674,7 +683,7 @@ extern "C" {
     \note           belongs to \ref porting_sec
     \warning
 */
-#define SL_OS_RET_CODE_OK                       ((int)OSI_OK)
+#define SL_OS_RET_CODE_OK
 
 /*!
     \brief
@@ -682,7 +691,7 @@ extern "C" {
     \note           belongs to \ref porting_sec
     \warning
 */
-#define SL_OS_WAIT_FOREVER                      ((OsiTime_t)OSI_WAIT_FOREVER)
+#define SL_OS_WAIT_FOREVER
 
 /*!
     \brief
@@ -690,7 +699,7 @@ extern "C" {
     \note           belongs to \ref porting_sec
     \warning
 */
-#define SL_OS_NO_WAIT	                        ((OsiTime_t)OSI_NO_WAIT)
+#define SL_OS_NO_WAIT
 
 /*!
 	\brief type definition for a time value
@@ -699,7 +708,7 @@ extern "C" {
 
     \note       belongs to \ref porting_sec
 */
-#define _SlTime_t				OsiTime_t
+#define _SlTime_t
 
 /*!
 	\brief 	type definition for a sync object container
@@ -881,7 +890,9 @@ extern "C" {
     \note       belongs to \ref porting_sec
 	\warning
 */
+/*
 #define SL_PLATFORM_EXTERNAL_SPAWN
+*/
 
 #ifdef SL_PLATFORM_EXTERNAL_SPAWN
 #define sl_Spawn(pEntry,pValue,flags)               
@@ -936,7 +947,7 @@ extern "C" {
 
     \warning
 */
-#define sl_WlanEvtHdlr
+#define sl_WlanEvtHdlr                            SimpleLinkWlanEventHandler
 
 /*!
     \brief          An event handler for IP address asynchronous event. Usually accepted after new WLAN connection.
@@ -951,7 +962,7 @@ extern "C" {
     \warning
 */
 
-#define sl_NetAppEvtHdlr
+#define sl_NetAppEvtHdlr   SimpleLinkNetAppEventHandler
 
 /*!
     \brief          A callback for HTTP server events.
@@ -969,9 +980,9 @@ extern "C" {
 
     \warning
 */
-/*
-#define sl_HttpServerCallback
-*/
+
+#define sl_HttpServerCallback        SimpleLinkHttpServerCallback
+
 /*!
     \brief
 
