@@ -204,7 +204,7 @@ _SlReturnVal_t _SlDrvCmdOp(
     SL_TRACE0(DBG_MSG, MSG_312, "_SlDrvCmdOp: call _SlDrvMsgWrite");
     /* send the message */
     g_pCB->FunctionParams.pCmdCtrl = pCmdCtrl;
-    g_pCB->FunctionParams.pTxRxDescBuff = pTxRxDescBuff;
+    g_pCB->FunctionParams.pTxRxDescBuff = (UINT8 *)pTxRxDescBuff;
     g_pCB->FunctionParams.pCmdExt = pCmdExt;
 
     RetVal = _SlDrvMsgWrite();
@@ -240,7 +240,7 @@ _SlReturnVal_t _SlDrvCmdSend(
     SL_TRACE0(DBG_MSG, MSG_312, "_SlDrvCmdSend: call _SlDrvMsgWrite");
     /*  send the message */
     g_pCB->FunctionParams.pCmdCtrl = pCmdCtrl;
-    g_pCB->FunctionParams.pTxRxDescBuff = pTxRxDescBuff;
+    g_pCB->FunctionParams.pTxRxDescBuff = (UINT8 *)pTxRxDescBuff;
     g_pCB->FunctionParams.pCmdExt = pCmdExt;
 
     RetVal = _SlDrvMsgWrite();
@@ -387,7 +387,7 @@ _SlReturnVal_t _SlDrvDataWriteOp(
     g_pCB->TempProtocolHeader.Len	= _SL_PROTOCOL_CALC_LEN(pCmdCtrl,pCmdExt);
 
     g_pCB->FunctionParams.pCmdCtrl = pCmdCtrl;
-    g_pCB->FunctionParams.pTxRxDescBuff = pTxRxDescBuff;
+    g_pCB->FunctionParams.pTxRxDescBuff = (UINT8 *)pTxRxDescBuff;
     g_pCB->FunctionParams.pCmdExt = pCmdExt;
     RetVal =  _SlDrvMsgWrite();
 

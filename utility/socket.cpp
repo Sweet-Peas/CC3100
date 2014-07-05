@@ -940,8 +940,8 @@ int sl_GetSockOpt(int sd, int level, int optname, void *optval, SlSocklen_t *opt
     CmdExt.TxPayloadLen = 0;
     CmdExt.RxPayloadLen = *optlen;
     CmdExt.pTxPayload = NULL;
-    CmdExt.pRxPayload = optval;
-	CmdExt.ActualRxPayloadLen = 0;
+    CmdExt.pRxPayload = (UINT8 *)optval;
+    CmdExt.ActualRxPayloadLen = 0;
 
     Msg.Cmd.sd = sd;
     Msg.Cmd.level = level;

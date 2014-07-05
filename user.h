@@ -62,9 +62,8 @@ extern "C" {
  */
   
 #include <string.h>
-#include <msp430.h>
 #include "board.h"
-#include "spi.h"
+#include "utility/spi.h"
 
 typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 /*!
@@ -947,7 +946,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
 
     \warning
 */
-#define sl_WlanEvtHdlr                            SimpleLinkWlanEventHandler
+#define sl_WlanEvtHdlr          SimpleLinkWlanEventHandler
 
 /*!
     \brief          An event handler for IP address asynchronous event. Usually accepted after new WLAN connection.
@@ -962,7 +961,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
     \warning
 */
 
-#define sl_NetAppEvtHdlr   SimpleLinkNetAppEventHandler
+#define sl_NetAppEvtHdlr        SimpleLinkNetAppEventHandler
 
 /*!
     \brief          A callback for HTTP server events.
@@ -981,7 +980,7 @@ typedef P_EVENT_HANDLER                         SL_P_EVENT_HANDLER;
     \warning
 */
 
-#define sl_HttpServerCallback        SimpleLinkHttpServerCallback
+#define sl_HttpServerCallback   SimpleLinkHttpServerCallback
 
 /*!
     \brief

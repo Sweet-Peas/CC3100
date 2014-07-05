@@ -1,5 +1,7 @@
 #include "simplelink.h"
 
+P_EVENT_HANDLER        pIrqEventHandler = 0;
+
 void SimpleLinkWlanEventHandler(SlWlanEvent_t *pSlWlanEvent)
 {
 
@@ -24,4 +26,11 @@ void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pSlHttpServerEvent,
     SlHttpServerResponse_t *pSlHttpServerResponse)
 {
 
+}
+
+int registerInterruptHandler(P_EVENT_HANDLER InterruptHdl , void* pValue)
+{
+    pIrqEventHandler = InterruptHdl;
+
+    return 0;
 }

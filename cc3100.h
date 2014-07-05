@@ -4,5 +4,6 @@
  #include "WProgram.h"
 #endif
 
-#include "platform.hpp"
+#include "board.h"
+#include "utility/spi.h"
 #include "utility/simplelink.h"

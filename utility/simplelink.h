@@ -213,7 +213,7 @@
     
     
 
-#include "utility/user.h"
+#include "../user.h"
 
 #ifndef __SIMPLELINK_H__
 #define	__SIMPLELINK_H__
@@ -307,9 +307,9 @@ typedef void (*_SlSpawnEntryFunc_t)(void* pValue);
 
 
 #ifdef SL_PLATFORM_MULTI_THREADED
-    #include "utility/spawn.h"
+    #include "spawn.h"
 #else
-    #include "utility/nonos.h"
+    #include "nonos.h"
 #endif
 
 /* 
@@ -317,16 +317,16 @@ typedef void (*_SlSpawnEntryFunc_t)(void* pValue);
    objInclusion.h must be the last arrangement just before including the API header files 
    since it based on the other configurations to decide which object should be included 
 */
-#include "utility/objInclusion.h"
-#include "utility/datatypes.h"
-#include "utility/trace.h"
-#include "utility/fs.h"
-#include "utility/socket.h"
-#include "utility/netapp.h"
-#include "utility/wlan.h"
-#include "utility/device.h"
-#include "utility/netcfg.h"
-#include "utility/wlan_rx_filters.h"
+#include "objInclusion.h"
+#include "datatypes.h"
+#include "trace.h"
+#include "fs.h"
+#include "socket.h"
+#include "netapp.h"
+#include "wlan.h"
+#include "device.h"
+#include "netcfg.h"
+#include "wlan_rx_filters.h"
 
 /*****************************************************************************
 

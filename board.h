@@ -37,7 +37,11 @@
 #ifndef _PLATFORM_H_
 #define _PLATFORM_H_
 
-#include <utility/datatypes.h>
+#include <datatypes.h>
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 typedef void (*P_EVENT_HANDLER)(void* pValue);
 
@@ -52,7 +56,7 @@ typedef void (*P_EVENT_HANDLER)(void* pValue);
 
     \warning
 */
-void CC3100_enable();
+void CC3100_enable(void);
 
 /*!
     \brief          Disables the CC3100
@@ -65,7 +69,7 @@ void CC3100_enable();
 
     \warning
 */
-void CC3100_disable();
+void CC3100_disable(void);
 
 /*!
     \brief          Enables the interrupt from the CC3100
@@ -78,7 +82,7 @@ void CC3100_disable();
 
     \warning
 */
-void CC3100_InterruptEnable();
+void CC3100_InterruptEnable(void);
 
 /*!
     \brief          Disables the interrupt from the CC3100
@@ -91,7 +95,7 @@ void CC3100_InterruptEnable();
 
     \warning
 */
-void CC3100_InterruptDisable();
+void CC3100_InterruptDisable(void);
 
 /*!
     \brief          Stops the Watch Dog timer
@@ -106,6 +110,9 @@ void CC3100_InterruptDisable();
 */
 
 void CC3100_init_hw(char cs_pin, char en_pin, char irq_pin, char irq_num);
-//void SimpleLinkWlanEventHandler(SlWlanEvent_t *pSlWlanEvent);
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif _PLATFORM_H_

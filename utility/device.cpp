@@ -44,7 +44,9 @@
 #include "protocol.h"
 #include "flowcont.h"
 #include "driver.h"
+#include "../board.h"
 
+int registerInterruptHandler(P_EVENT_HANDLER InterruptHdl , void* pValue);
 /*****************************************************************************
 ******************************************************************************/
 #if _SL_INCLUDE_FUNC(sl_Task)
@@ -110,7 +112,8 @@ int sl_Start(const void* pIfHdl, char* pDevName, const P_INIT_CALLBACK pInitCall
 
     if( g_pCB->FD >= 0)
     {
-        sl_DeviceDisable();
+           CC3100_disable();
+//        sl_DeviceDisable();
 
         sl_IfRegIntHdlr((SL_P_EVENT_HANDLER)_SlDrvRxIrqHandler, NULL);
 

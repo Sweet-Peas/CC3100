@@ -35,13 +35,16 @@
 */
 
 #include <Arduino.h>
-#include "platform.hpp"
-#include "utility/simplelink.h"
+#include "board.h"
 
 UINT8 gcs_pin = 0xff;
 UINT8 gen_pin = 0xff;
 UINT8 girq_pin = 0xff;
 UINT8 girq_num = 0xff;
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
 
 void CC3000InterruptHandler(void);
 
@@ -49,23 +52,23 @@ void CC3000InterruptHandler(void);
                   Interrupt Handlers
 ****************************************************************************/
 
-void CC3100_disable()
+void CC3100_disable(void)
 {
     digitalWrite(gen_pin, HIGH);
 }
 
-void CC3100_enable()
+void CC3100_enable(void)
 {
     digitalWrite(gen_pin, LOW);
 }
 
-void CC3100_InterruptEnable()
+void CC3100_InterruptEnable(void)
 {
   if (girq_num != 0xff)
     attachInterrupt(girq_num, CC3000InterruptHandler, RISING);
 }
 
-void CC3100_InterruptDisable()
+void CC3100_InterruptDisable(void)
 {
   if (girq_num != 0xff)
     detachInterrupt(girq_num);
@@ -109,4 +112,9 @@ void CC3000InterruptHandler(void)
         break;
     }
 #endif
+
+#ifdef  __cplusplus
+}
+#endif
+
 }

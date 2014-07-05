@@ -33,13 +33,12 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
 */
-#include <Arduino.h>
 #include <SPI.h>
 
-#include "utility/datatypes.h"
-#include "utility/simplelink.h"
-#include "spi.hpp"
-#include "platform.hpp"
+#include "datatypes.h"
+#include "simplelink.h"
+#include "spi.h"
+#include "../board.h"
 
 #define CC3100_CS   1
 
