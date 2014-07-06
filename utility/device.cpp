@@ -39,6 +39,7 @@
     API Prototypes
 
  *****************************************************************************/
+#include <Arduino.h>
 #include "datatypes.h"
 #include "simplelink.h"
 #include "protocol.h"
@@ -112,8 +113,7 @@ int sl_Start(const void* pIfHdl, char* pDevName, const P_INIT_CALLBACK pInitCall
 
     if( g_pCB->FD >= 0)
     {
-           CC3100_disable();
-//        sl_DeviceDisable();
+        sl_DeviceDisable();
 
         sl_IfRegIntHdlr((SL_P_EVENT_HANDLER)_SlDrvRxIrqHandler, NULL);
 
@@ -198,11 +198,13 @@ const _SlCmdCtrl_t _SlStopCmdCtrl =
 #if _SL_INCLUDE_FUNC(sl_Stop)
 int sl_Stop(unsigned short timeout)
 {
+    DEBUG_PRINT("Stopping driver !");
     int RetVal=0;
     _SlStopMsg_u      Msg;
     _BasicResponse_t  AsyncRsp;
-	int				  pObjIdx = MAX_CONCURRENT_ACTIONS;
+    int pObjIdx = MAX_CONCURRENT_ACTIONS;
     /* if timeout is 0 the shutdown is forced immediately */
+
     if( 0 == timeout ) 
     {
       sl_IfRegIntHdlr(NULL, NULL);
@@ -212,29 +214,39 @@ int sl_Stop(unsigned short timeout)
     }
     else
     {
+      DEBUG_PRINT("-10");
       /* let the device make the shutdown using the defined timeout */
       Msg.Cmd.Timeout = timeout;
 	  /* Use Obj to issue the command, if not available try later */
 	  pObjIdx = _SlDrvWaitForPoolObj(START_STOP_ID,SL_MAX_SOCKETS);
+    DEBUG_PRINT("0");
 	  if (MAX_CONCURRENT_ACTIONS == pObjIdx)
  	  {
 		return SL_POOL_IS_EMPTY;
 	  }
+      DEBUG_PRINT("1");
       OSI_RET_OK_CHECK(sl_LockObjLock(&g_pCB->ProtectionLockObj, SL_OS_WAIT_FOREVER));
 
+      DEBUG_PRINT("2");
       g_pCB->ObjPool[pObjIdx].pRespArgs = (UINT8 *)&AsyncRsp;
 
+      DEBUG_PRINT("3");
       OSI_RET_OK_CHECK(sl_LockObjUnlock(&g_pCB->ProtectionLockObj));
 
+      DEBUG_PRINT("4");
       VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlStopCmdCtrl, &Msg, NULL));
 
+      DEBUG_PRINT("5");
       if(SL_OS_RET_CODE_OK == (int)Msg.Rsp.status)
       {
+        DEBUG_PRINT("6");
+
          OSI_RET_OK_CHECK(sl_SyncObjWait(&g_pCB->ObjPool[pObjIdx].SyncObj, SL_OS_WAIT_FOREVER));
          Msg.Rsp.status = AsyncRsp.status;
          RetVal = Msg.Rsp.status;
       }
 
+      DEBUG_PRINT("Releasing driver pool object !");
       _SlDrvReleasePoolObj(pObjIdx);
 
       sl_IfRegIntHdlr(NULL, NULL);
